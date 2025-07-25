@@ -1,7 +1,12 @@
+import os
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "postgresql+asyncpg://postgres:akphyo93@localhost/prplus_db"
+# ⛔ Old Local Config (commented out)
+# DATABASE_URL = "postgresql+asyncpg://postgres:akphyo93@localhost/prplus_db"
+
+# ✅ Use Render environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_async_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
