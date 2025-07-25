@@ -1,0 +1,85 @@
+# --- Types ---
+type PaginatedUsers {
+  users: [User]
+  totalCount: Int
+}
+
+type User {
+  id: Int!
+  name: String!
+  role: String!
+  created_date: String
+  updated_date: String
+  created_by: User
+  updated_by: User
+}
+
+type PaginatedEvents {
+  events: [Event]
+  totalCount: Int
+}
+
+type Event {
+  id: Int!
+  name: String!
+  contact: String
+  venue: String
+  description: String
+  event_date: String
+  created_date: String
+  updated_date: String
+  created_by: User
+  updated_by: User
+}
+
+# --- Queries ---
+type Query {
+  getUsers(page: Int = 1, size: Int = 10, name: String, role: String): PaginatedUsers
+  getUserById(id: Int!): User
+  currentUser: User
+
+  getEvents(page: Int = 1, size: Int = 10, name: String, contact: String, venue: String, dateFrom: String, dateTo: String): PaginatedEvents
+  getEventById(id: Int!): Event
+}
+
+# --- Mutations ---
+type Mutation {
+  createUser(input: UserCreateInput!): User
+  updateUser(id: Int!, input: UserUpdateInput!): User
+  deleteUser(id: Int!): Boolean
+  login(username: String!, password: String!): String
+  changePassword(currentPassword: String!, newPassword: String!): Boolean
+
+  createEvent(input: EventInput!): Event
+  bulkCreateEvents(events: [EventInput!]!): Boolean
+  updateEvent(id: Int!, input: EventUpdateInput!): Event
+  deleteEvent(id: Int!): Boolean
+}
+
+# --- Inputs ---
+input UserCreateInput {
+  name: String!
+  role: String!
+  password: String!
+}
+
+input UserUpdateInput {
+  name: String!
+  role: String!
+}
+
+input EventInput {
+  name: String!
+  contact: String
+  venue: String
+  description: String
+  event_date: String!
+}
+
+input EventUpdateInput {
+  name: String!
+  contact: String
+  venue: String
+  description: String
+  event_date: String!
+}
